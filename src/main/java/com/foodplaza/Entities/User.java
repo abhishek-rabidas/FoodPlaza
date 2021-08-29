@@ -2,6 +2,7 @@ package com.foodplaza.Entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +13,9 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-public class User {
-    @GeneratedValue
-    @Id
-    private Long id;
+public class User extends AbstractPersistable<Long> {
+    @Column(updatable = false, unique = true)
+    private String uid;
     private String name;
     @Column(length = 100)
     private String email;

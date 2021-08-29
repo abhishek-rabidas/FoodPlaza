@@ -1,5 +1,6 @@
-package com.foodplaza.Config;
+package com.foodplaza.Services;
 
+import com.foodplaza.Config.CustomUserDetails;
 import com.foodplaza.Entities.User;
 import com.foodplaza.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(s);
-        if(user == null) throw new UsernameNotFoundException("User doest't exists");
+        if(user == null) throw new UsernameNotFoundException("User doesn't exists");
         else return new CustomUserDetails(user);
     }
 }
