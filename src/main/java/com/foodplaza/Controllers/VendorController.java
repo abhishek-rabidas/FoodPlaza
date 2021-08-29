@@ -1,15 +1,20 @@
 package com.foodplaza.Controllers;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.foodplaza.Services.VendorServices;
+import com.foodplaza.Views.RestaurantRegistrationRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/vendor")
 public class VendorController {
 
-    @PostMapping("addrestaurant")
-    public void addRestaurant(){
+    @Autowired
+    private VendorServices vendorServices;
 
+    @PostMapping("addrestaurant")
+    public void addRestaurant(@RequestBody RestaurantRegistrationRequest restaurantRegistrationRequest,
+                              @RequestHeader("username") String username){
+        vendorServices.registerRestaurant(restaurantRegistrationRequest, username);
     }
 }

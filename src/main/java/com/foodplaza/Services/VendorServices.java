@@ -25,21 +25,41 @@ public class VendorServices {
 
     public void registerRestaurant(RestaurantRegistrationRequest request, String vendorName){
         User vendor = userRepository.findByUsername(vendorName);
-        Restaurant restaurant = new Restaurant();
-        restaurant.setName(request.getName());
-        restaurant.setAddress(request.getAddress());
-        restaurant.setVendor(vendor);
-        restaurantRepository.save(restaurant);
+        try{
+            if(!vendor.getRole().equals("Vendor")) throw new IllegalAccessException("Your are not allowed to add " +
+                    "restaurant");
+            else{
+                Restaurant restaurant = new Restaurant();
+                restaurant.setName(request.getName());
+                restaurant.setAddress(request.getAddress());
+                restaurant.setVendor(vendor);
+                restaurantRepository.save(restaurant);
+            }
+        }catch (IllegalAccessException e){
+            return;
+        }
     }
 
-    public void addDish(DishAddRequest request, Long restaurantID){
+    public void addDish(DishAddRequest request, Long restaurantID, String vendorName){
+        User vendor = userRepository.findByUsername(vendorName);
         Restaurant restaurant = restaurantRepository.getOne(restaurantID);
-        Dishes dish = new Dishes();
-        dish.setName(request.getName());
-        dish.setImage(request.getImage());
-        dish.setDetails(request.getDetails());
-        dish.setPrice(request.getPrice());
-        dish.setRestaurant(restaurant);
-        dishesRepository.save(dish);
+        try{
+            if(!vendor.getRole().equals("Vendor") && restaurant.getVendor()!=vendor) throw new IllegalAccessException(
+                    "Your are not " +
+                    "allowed to " +
+                    "add " +
+                    "dish");
+            else{
+                Dishes dish = new Dishes();
+                dish.setName(request.getName());
+                dish.setImage(request.getImage());
+                dish.setDetails(request.getDetails());
+                dish.setPrice(request.getPrice());
+                dish.setRestaurant(restaurant);
+                dishesRepository.save(dish);
+            }
+        }catch (IllegalAccessException e){
+            return;
+        }
     }
 }

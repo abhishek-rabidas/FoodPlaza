@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class AuthenticationServices {
@@ -27,6 +28,7 @@ public class AuthenticationServices {
                 throw new Exception("Email already exists");
             }else{
                 User newUser = new User();
+                newUser.setUid(UUID.randomUUID().toString());
                 newUser.setJoiningDate(new Date());
                 newUser.setName(request.getName());
                 newUser.setUsername(request.getUsername());
