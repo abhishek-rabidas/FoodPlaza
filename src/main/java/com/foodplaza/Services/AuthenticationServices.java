@@ -43,6 +43,11 @@ public class AuthenticationServices {
     }
 
     public boolean loginUser(LoginUserRequest request){
-        return passwordEncoder.matches(request.getPassword(), userRepository.findByUsername(request.getUsername()).getPassword());
+        try{
+            return passwordEncoder.matches(request.getPassword(),
+                    userRepository.findByUsername(request.getUsername()).getPassword());
+        }catch (NullPointerException e){
+            throw new NullPointerException("User doesn't exist, please sign up");
+        }
     }
 }
