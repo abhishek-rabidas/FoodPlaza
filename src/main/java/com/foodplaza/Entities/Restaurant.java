@@ -13,6 +13,7 @@ public class Restaurant {
     @GeneratedValue
     private Long id;
     private String name;
+    private String address;
     @OneToOne
     private User vendor;
 }
