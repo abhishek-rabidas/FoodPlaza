@@ -11,6 +11,9 @@ import com.foodplaza.Views.RestaurantRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 @Service
 public class VendorServices {
 
@@ -23,11 +26,14 @@ public class VendorServices {
     @Autowired
     private DishesRepository dishesRepository;
 
-    public void registerRestaurant(RestaurantRegistrationRequest request, String vendorName){
-        User vendor = userRepository.findByUsername(vendorName);
-        try{
-            if(!vendor.getRole().equals("Vendor")) throw new IllegalAccessException("Your are not allowed to add " +
-                    "restaurant");
+    public void registerRestaurant(RestaurantRegistrationRequest request, String base64auth){
+        System.out.println("Adding Restaurant");
+        String encodedString = base64auth.split(" ")[1];
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+        String credentials = new String(decodedBytes, StandardCharsets.UTF_8);
+        final String[] values = credentials.split(":", 2);
+        User vendor = userRepository.findByUsername(values[0]);
+            if(!vendor.getRole().equals("Vendor")) throw new RuntimeException("Your are not allowed to add restaurant");
             else{
                 Restaurant restaurant = new Restaurant();
                 restaurant.setName(request.getName());
@@ -35,20 +41,18 @@ public class VendorServices {
                 restaurant.setVendor(vendor);
                 restaurantRepository.save(restaurant);
             }
-        }catch (IllegalAccessException e){
-            return;
-        }
     }
 
-    public void addDish(DishAddRequest request, Long restaurantID, String vendorName){
-        User vendor = userRepository.findByUsername(vendorName);
+    public void addDish(DishAddRequest request, Long restaurantID, String base64auth){
+        System.out.println("Adding Dish");
+        String encodedString = base64auth.split(" ")[1];
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+        String credentials = new String(decodedBytes, StandardCharsets.UTF_8);
+        final String[] values = credentials.split(":", 2);
+        User vendor = userRepository.findByUsername(values[0]);
         Restaurant restaurant = restaurantRepository.getOne(restaurantID);
-        try{
-            if(!vendor.getRole().equals("Vendor") && restaurant.getVendor()!=vendor) throw new IllegalAccessException(
-                    "Your are not " +
-                    "allowed to " +
-                    "add " +
-                    "dish");
+            if(!vendor.getRole().equals("Vendor") && restaurant.getVendor()!=vendor) throw new RuntimeException(
+                    "Your are not allowed to add dish");
             else{
                 Dishes dish = new Dishes();
                 dish.setName(request.getName());
@@ -58,8 +62,5 @@ public class VendorServices {
                 dish.setRestaurant(restaurant);
                 dishesRepository.save(dish);
             }
-        }catch (IllegalAccessException e){
-            return;
-        }
     }
 }

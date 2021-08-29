@@ -21,11 +21,10 @@ public class AuthenticationServices {
     private PasswordEncoder passwordEncoder;
 
     public boolean registerUser(RegisterUserRequest request, String role){
-        try {
             if(userRepository.countByUsername(request.getUsername())>0){
-                throw new Exception("Username already exists");
+                throw new RuntimeException("Username already exists");
             }else if(userRepository.countByEmail(request.getEmail())>0){
-                throw new Exception("Email already exists");
+                throw new RuntimeException("Email already exists");
             }else{
                 User newUser = new User();
                 newUser.setUid(UUID.randomUUID().toString());
@@ -38,10 +37,6 @@ public class AuthenticationServices {
                 userRepository.save(newUser);
                 return true;
             }
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public boolean loginUser(LoginUserRequest request){
