@@ -9,6 +9,7 @@ import com.foodplaza.Repositories.UserRepository;
 import com.foodplaza.Views.DishAddRequest;
 import com.foodplaza.Views.RestaurantRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -33,14 +34,16 @@ public class VendorServices {
         String credentials = new String(decodedBytes, StandardCharsets.UTF_8);
         final String[] values = credentials.split(":", 2);
         User vendor = userRepository.findByUsername(values[0]);
-            if(!vendor.getRole().equals("Vendor")) throw new RuntimeException("Your are not allowed to add restaurant");
-            else{
+        if(vendor == null) throw new UsernameNotFoundException("User doesn't exist");
+        if(!vendor.getRole().equals("Vendor")) throw new RuntimeException("Your are not allowed to add restaurant");
+
+        else{
                 Restaurant restaurant = new Restaurant();
                 restaurant.setName(request.getName());
                 restaurant.setAddress(request.getAddress());
                 restaurant.setVendor(vendor);
                 restaurantRepository.save(restaurant);
-            }
+        }
     }
 
     public void addDish(DishAddRequest request, Long restaurantID, String base64auth){
@@ -50,10 +53,12 @@ public class VendorServices {
         String credentials = new String(decodedBytes, StandardCharsets.UTF_8);
         final String[] values = credentials.split(":", 2);
         User vendor = userRepository.findByUsername(values[0]);
+        if(vendor == null) throw new UsernameNotFoundException("User doesn't exist");
         Restaurant restaurant = restaurantRepository.getOne(restaurantID);
-            if(!vendor.getRole().equals("Vendor") && restaurant.getVendor()!=vendor) throw new RuntimeException(
+        if(restaurant == null) throw new RuntimeException("Restaurant doesn't exist");
+        if(!vendor.getRole().equals("Vendor") && restaurant.getVendor()!=vendor) throw new RuntimeException(
                     "Your are not allowed to add dish");
-            else{
+        else{
                 Dishes dish = new Dishes();
                 dish.setName(request.getName());
                 dish.setImage(request.getImage());
