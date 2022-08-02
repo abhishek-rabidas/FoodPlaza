@@ -10,10 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-public class Orders {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Orders extends AbstractPersistable<Long>{
     @OneToOne
     private User user;
     private String username;

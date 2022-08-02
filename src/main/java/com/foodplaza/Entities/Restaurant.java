@@ -9,10 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class Restaurant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Restaurant extends AbstractPersistable<Long>{
     private String name;
     private String address;
     @OneToOne

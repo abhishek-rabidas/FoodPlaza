@@ -9,10 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class Dishes {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Dishes extends AbstractPersistable<Long>{
     private String name;
     private Double price;
     private String image;
