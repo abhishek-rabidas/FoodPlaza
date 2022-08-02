@@ -1,9 +1,9 @@
 package com.foodplaza.Services;
 
 import com.foodplaza.Entities.User;
-import com.foodplaza.Repositories.UserRepository;
-import com.foodplaza.Views.LoginUserRequest;
-import com.foodplaza.Views.RegisterUserRequest;
+import com.foodplaza.DAO.UserRepository;
+import com.foodplaza.DTO.LoginUserRequest;
+import com.foodplaza.DTO.RegisterUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

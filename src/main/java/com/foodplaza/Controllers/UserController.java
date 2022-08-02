@@ -1,8 +1,8 @@
 package com.foodplaza.Controllers;
 
 import com.foodplaza.Services.UserServices;
-import com.foodplaza.Views.OrderRequest;
-import com.foodplaza.Views.OrderResponse;
+import com.foodplaza.DTO.OrderRequest;
+import com.foodplaza.DTO.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

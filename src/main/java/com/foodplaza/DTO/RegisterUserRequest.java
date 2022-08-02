@@ -1,8 +1,6 @@
-package com.foodplaza.Views;
+package com.foodplaza.DTO;
 
 import lombok.Getter;
-
-import java.util.Date;
 
 @Getter
 public class RegisterUserRequest {

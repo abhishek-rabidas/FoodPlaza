@@ -1,4 +1,4 @@
-package com.foodplaza.Views;
+package com.foodplaza.DTO;
 
 import lombok.Getter;
 import lombok.Setter;

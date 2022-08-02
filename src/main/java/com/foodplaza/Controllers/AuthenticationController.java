@@ -1,8 +1,8 @@
 package com.foodplaza.Controllers;
 
 import com.foodplaza.Services.AuthenticationServices;
-import com.foodplaza.Views.LoginUserRequest;
-import com.foodplaza.Views.RegisterUserRequest;
+import com.foodplaza.DTO.LoginUserRequest;
+import com.foodplaza.DTO.RegisterUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

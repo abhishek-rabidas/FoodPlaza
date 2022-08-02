@@ -2,7 +2,7 @@ package com.foodplaza.Services;
 
 import com.foodplaza.Config.CustomUserDetails;
 import com.foodplaza.Entities.User;
-import com.foodplaza.Repositories.UserRepository;
+import com.foodplaza.DAO.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

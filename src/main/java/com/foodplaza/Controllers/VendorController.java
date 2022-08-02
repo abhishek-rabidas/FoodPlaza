@@ -1,8 +1,8 @@
 package com.foodplaza.Controllers;
 
 import com.foodplaza.Services.VendorServices;
-import com.foodplaza.Views.DishAddRequest;
-import com.foodplaza.Views.RestaurantRegistrationRequest;
+import com.foodplaza.DTO.DishAddRequest;
+import com.foodplaza.DTO.RestaurantRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

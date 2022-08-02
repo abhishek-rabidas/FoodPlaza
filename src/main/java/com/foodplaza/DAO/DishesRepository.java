@@ -1,4 +1,4 @@
-package com.foodplaza.Repositories;
+package com.foodplaza.DAO;
 
 import com.foodplaza.Entities.Dishes;
 import org.springframework.data.jpa.repository.JpaRepository;
