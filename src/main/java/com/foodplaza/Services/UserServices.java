@@ -35,7 +35,7 @@ public class UserServices {
     @Autowired
     private OrdersRepository ordersRepository;
 
-    public void placeOrder(OrderRequest orderRequest, String base64auth){
+    public Orders placeOrder(OrderRequest orderRequest, String base64auth){
         String encodedString = base64auth.split(" ")[1];
         byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
         String credentials = new String(decodedBytes, StandardCharsets.UTF_8);
@@ -56,7 +56,7 @@ public class UserServices {
         order.setRestaurantName(orderedRestaurant.getName());
         order.setOrderTime(new Date());
         order.setOrderPrice(orderedDish.getPrice());
-        ordersRepository.save(order);
+        return ordersRepository.save(order);
     }
 
     public List<OrderResponse> getAllUserOrders(String base64auth){
