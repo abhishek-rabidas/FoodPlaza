@@ -1,9 +1,11 @@
 package com.foodplaza.DTO.Response;
 
 import com.foodplaza.Entities.User;
+import lombok.Getter;
 import lombok.Setter;
 
 @Setter
+@Getter
 public class UserResponse {
     private String uid;
     private String name;
